@@ -1,3 +1,7 @@
+#labescape
+
+[![Build Status](https://api.travis-ci.org/repositories/stepio/labescape.svg?branch=master)](https://travis-ci.org/stepio/labescape)
+
 Example input
 
 	OOOOOOOOOO
