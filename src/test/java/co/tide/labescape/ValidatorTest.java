@@ -1,6 +1,5 @@
 package co.tide.labescape;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,23 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * @author istepanov
  */
-public class ValidatorTest {
-
-    private char labyrinth[][];
-
-    @Before
-    public void setUp() {
-        labyrinth = new char[][]{
-                {'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'},
-                {'O', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ', 'O'},
-                {'O', ' ', 'O', 'O', ' ', 'O', ' ', 'O', ' ', 'O'},
-                {'O', ' ', ' ', 'O', ' ', 'O', ' ', 'O', ' ', 'O'},
-                {'O', ' ', 'O', 'O', ' ', ' ', ' ', 'O', ' ', ' '},
-                {'O', ' ', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'},
-                {'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O'},
-                {'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'}
-        };
-    }
+public class ValidatorTest extends TestBase {
 
     @Test
     public void validateInput_valid() throws Exception {
