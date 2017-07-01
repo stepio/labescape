@@ -13,4 +13,8 @@ public class PathFinder {
         }
         return false;
     }
+
+    public void select(char[][] labyrinth, int nowX, int nowY) {
+        labyrinth[nowX][nowY] = LabChars.PATH.getValue();
+    }
 }

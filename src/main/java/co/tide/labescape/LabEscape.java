@@ -5,6 +5,14 @@ package co.tide.labescape;
  */
 public class LabEscape {
 
+    private Validator validator;
+    private PathFinder pathFinder;
+
+    public LabEscape() {
+        this.validator = new Validator();
+        this.pathFinder = new PathFinder();
+    }
+
     /**
      * @param labyrinth A labyrinth drawn on a matrix of characters. It's at least 4x4, can be a rectangle or a square.
      *                  Walkable areas are represented with a space character, walls are represented with a big O character.
@@ -14,14 +22,20 @@ public class LabEscape {
      * @return          A char matrix with the same labyrinth and a path drawn from the starting point to the escape
      * @throws          NoEscapeException when no path exists to the outside, from the selected starting point
      */
+    @Deprecated
     public static char[][] drawPathForEscape(char[][] labyrinth, int startX, int startY) throws NoEscapeException {
-        final Validator validator = new Validator();
-        validator.validateInput(labyrinth, startX, startY);
-
         final LabEscape labEscape = new LabEscape();
-        char[][] result = labEscape.clone(labyrinth);
+        return labEscape.drawPath(labyrinth, startX, startY);
+    }
 
-        // throw new UnsupportedOperationException("please implement"); // TODO
+    public char[][] drawPath(char[][] labyrinth, int startX, int startY) throws NoEscapeException {
+        this.validator.validateInput(labyrinth, startX, startY);
+        char[][] result = clone(labyrinth);
+        if (this.pathFinder.isExit(labyrinth, startX, startY)) {
+            this.pathFinder.select(result, startX, startY);
+        } else {
+            // TODO
+        }
         return result;
     }
 
