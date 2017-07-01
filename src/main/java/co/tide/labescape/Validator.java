@@ -5,10 +5,11 @@ package co.tide.labescape;
  */
 public class Validator {
 
-    public void validateInput(char[][] labyrinth, int startX, int startY) throws NoEscapeException {
+    public boolean validateInput(char[][] labyrinth, int startX, int startY) throws NoEscapeException {
         validateLabyrinth(labyrinth);
         validateStartingPoint(labyrinth, startX, startY);
         checkStartingPointNotWall(labyrinth, startX, startY);
+        return true;
     }
 
     void validateLabyrinth(char[][] labyrinth) throws NoEscapeException {
