@@ -26,6 +26,18 @@ public class LabEscapeTest extends TestBase {
     }
 
     @Test
+    public void drawPathForEscape_mainCase() throws Exception {
+        char [][] copy = LabEscape.drawPathForEscape(labyrinth, 3, 1);
+        assertThat(copy).isNotEqualTo(labyrinth);
+        assertThat(copy[3][1]).isEqualTo(LabChars.PATH.getValue());
+        assertThat(copy[4][9]).isEqualTo(LabChars.PATH.getValue());
+        assertThat(copy[3][2]).isEqualTo(labyrinth[3][2])
+                .isEqualTo(LabChars.FREE.getValue());
+        assertThat(copy[4][1]).isEqualTo(labyrinth[4][1])
+                .isEqualTo(LabChars.FREE.getValue());
+    }
+
+    @Test
     public void clone_checkEqualsNotSame() throws Exception {
         char [][] copy = labEscape.clone(labyrinth);
         assertThat(copy).isEqualTo(labyrinth).isNotSameAs(labyrinth);

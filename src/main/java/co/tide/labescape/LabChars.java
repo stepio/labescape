@@ -5,7 +5,7 @@ package co.tide.labescape;
  */
 public enum LabChars {
 
-    WALL('O'), FREE(' '), PATH ('•');
+    WALL('O'), FREE(' '), PATH('•'), FAIL('X');
 
     private char value;
 

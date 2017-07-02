@@ -6,11 +6,11 @@ package co.tide.labescape;
 public class LabEscape {
 
     private Validator validator;
-    private PathFinder pathFinder;
+    private PathTools pathTools;
 
     public LabEscape() {
         this.validator = new Validator();
-        this.pathFinder = new PathFinder();
+        this.pathTools = new PathTools();
     }
 
     /**
@@ -31,12 +31,47 @@ public class LabEscape {
     public char[][] drawPath(char[][] labyrinth, int startX, int startY) throws NoEscapeException {
         this.validator.validateInput(labyrinth, startX, startY);
         char[][] result = clone(labyrinth);
-        if (this.pathFinder.isExit(labyrinth, startX, startY)) {
-            this.pathFinder.select(result, startX, startY);
+        if (this.pathTools.isExit(result, startX, startY)) {
+            this.pathTools.markPath(result, startX, startY);
         } else {
-            // TODO
+            if (!traverseRecursively(result, startX, startY)) {
+                throw new NoEscapeException("Specified starting point at [" + startX + "," + startY + "] has no access to exit");
+            }
+            clearFail(result);
         }
         return result;
+    }
+
+    boolean traverseRecursively(char[][] labyrinth, int nowX, int nowY) {
+        if (this.pathTools.isOutside(labyrinth, nowX, nowY)) {
+            return false;
+        }
+        if (this.pathTools.isNotBlank(labyrinth, nowX, nowY)) {
+            return false;
+        }
+
+        this.pathTools.markPath(labyrinth, nowX, nowY);
+        if (this.pathTools.isExit(labyrinth, nowX, nowY)) {
+            return true;
+        }
+
+        if (traverseRecursively(labyrinth, nowX + 1, nowY) || traverseRecursively(labyrinth, nowX, nowY + 1) ||
+                traverseRecursively(labyrinth, nowX - 1, nowY) || traverseRecursively(labyrinth, nowX, nowY - 1)) {
+            return true;
+        } else {
+            this.pathTools.markFail(labyrinth, nowX, nowY);
+            return false;
+        }
+    }
+
+    void clearFail(char[][] labyrinth) {
+        for (int i = 0; i < labyrinth.length; ++i) {
+            for (int j = 0; j < labyrinth[i].length; ++j) {
+                if (this.pathTools.isFail(labyrinth, i, j)) {
+                    this.pathTools.markFree(labyrinth, i, j);
+                }
+            }
+        }
     }
 
     char[][] clone(char[][] labyrinth) {
