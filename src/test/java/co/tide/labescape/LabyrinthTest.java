@@ -32,33 +32,33 @@ public class LabyrinthTest extends TestBase {
         labyrinth.toArray()[3][6] = '?';
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessageContaining("Specified cellArray is incorrect, unsupported character");
+                .hasMessageContaining("Specified labyrinth is incorrect, unsupported character");
 
         labyrinth.toArray()[3] = new char[]{};
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessageMatching("Specified cellArray is incorrect, row 3 is empty");
+                .hasMessageMatching("Specified labyrinth is incorrect, row 3 is empty");
         labyrinth.toArray()[3] = null;
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessageMatching("Specified cellArray is incorrect, row 3 is empty");
+                .hasMessageMatching("Specified labyrinth is incorrect, row 3 is empty");
 
         labyrinth = Labyrinth.valueOf(new char[][]{{}});
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessageMatching("Specified cellArray is incorrect, row .* is empty");
+                .hasMessageMatching("Specified labyrinth is incorrect, row .* is empty");
         labyrinth = Labyrinth.valueOf(new char[][]{null});
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessageMatching("Specified cellArray is incorrect, row .* is empty");
+                .hasMessageMatching("Specified labyrinth is incorrect, row .* is empty");
 
         labyrinth = Labyrinth.valueOf(new char[][]{});
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessage("Specified cellArray is empty");
+                .hasMessage("Specified labyrinth is empty");
         labyrinth = Labyrinth.valueOf(null);
         assertThatThrownBy(labyrinth::validate)
                 .isInstanceOf(NoEscapeException.class)
-                .hasMessage("Specified cellArray is empty");
+                .hasMessage("Specified labyrinth is empty");
     }
 }

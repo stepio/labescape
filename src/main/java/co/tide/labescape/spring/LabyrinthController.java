@@ -44,9 +44,9 @@ public class LabyrinthController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> escape(@RequestParam("startX") int startX,
-                                    @RequestParam("startY") int startY,
-                                    @RequestBody List<String> labyrinth) throws NoEscapeException {
+    public ResponseEntity<?> findEscape(@RequestParam("startX") int startX,
+                                        @RequestParam("startY") int startY,
+                                        @RequestBody List<String> labyrinth) throws NoEscapeException {
         Labyrinth result = valueOf(labyrinth);
         result.validate();
         Area initial = result.getArea(startX, startY);
@@ -82,7 +82,7 @@ public class LabyrinthController {
      */
     @ExceptionHandler
     public ResponseEntity<?> handleException(NoEscapeException ex) {
-        log.error("Request processing failed", ex);
+        log.warn("Request processing failed", ex);
         return ResponseEntity.badRequest().body(Collections.singletonMap("message", ex.getMessage()));
     }
 }

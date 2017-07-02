@@ -67,15 +67,15 @@ public class Labyrinth {
      */
     public boolean validate() throws NoEscapeException {
         if (cellArray == null || cellArray.length == 0) {
-            throw new NoEscapeException("Specified cellArray is empty");
+            throw new NoEscapeException("Specified labyrinth is empty");
         }
         for (int i = 0; i < cellArray.length; ++i) {
             if (cellArray[i] == null || cellArray[i].length == 0) {
-                throw new NoEscapeException("Specified cellArray is incorrect, row " + i + " is empty");
+                throw new NoEscapeException("Specified labyrinth is incorrect, row " + i + " is empty");
             }
             for (int j = 0; j < cellArray[i].length; ++j) {
                 if (cellArray[i][j] != AreaStatus.WALL.getValue() && cellArray[i][j] != AreaStatus.FREE.getValue()) {
-                    throw new NoEscapeException("Specified cellArray is incorrect, unsupported character " + cellArray[i][j] + " at [" + i + "," + j + "]");
+                    throw new NoEscapeException("Specified labyrinth is incorrect, unsupported character " + cellArray[i][j] + " at [" + i + "," + j + "]");
                 }
             }
         }
