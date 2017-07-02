@@ -3,46 +3,48 @@ package co.tide.labescape;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
+ * Unit tests for {@link LabEscape}.
+ *
  * @author istepanov
  */
 public class LabEscapeTest extends TestBase {
 
-    private LabEscape labEscape;
-
-    @Override
-    public void setUp() {
-        super.setUp();
-        labEscape = new LabEscape();
-    }
-
     @Test
     public void drawPathForEscape_trivialCase() throws Exception {
-        char [][] copy = LabEscape.drawPathForEscape(labyrinth, 4, 9);
+        char[][] array = labyrinth.toArray();
+        char[][] copy = LabEscape.drawPathForEscape(array, 4, 9);
         assertThat(copy).isNotEqualTo(labyrinth);
-        assertThat(labyrinth[4][9]).isEqualTo(LabChars.FREE.getValue());
-        assertThat(copy[4][9]).isEqualTo(LabChars.PATH.getValue());
+        assertThat(array[4][9]).isEqualTo(AreaStatus.FREE.getValue());
+        assertThat(copy[4][9]).isEqualTo(AreaStatus.PATH.getValue());
     }
 
     @Test
     public void drawPathForEscape_mainCase() throws Exception {
-        char [][] copy = LabEscape.drawPathForEscape(labyrinth, 3, 1);
+        char[][] array = labyrinth.toArray();
+        char[][] copy = LabEscape.drawPathForEscape(array, 3, 1);
         assertThat(copy).isNotEqualTo(labyrinth);
-        assertThat(copy[3][1]).isEqualTo(LabChars.PATH.getValue());
-        assertThat(copy[4][9]).isEqualTo(LabChars.PATH.getValue());
-        assertThat(copy[3][2]).isEqualTo(labyrinth[3][2])
-                .isEqualTo(LabChars.FREE.getValue());
-        assertThat(copy[4][1]).isEqualTo(labyrinth[4][1])
-                .isEqualTo(LabChars.FREE.getValue());
+        assertThat(copy[3][1]).isEqualTo(AreaStatus.PATH.getValue());
+        assertThat(copy[4][9]).isEqualTo(AreaStatus.PATH.getValue());
+        assertThat(copy[3][2]).isEqualTo(array[3][2])
+                .isEqualTo(AreaStatus.FREE.getValue());
+        assertThat(copy[4][1]).isEqualTo(array[4][1])
+                .isEqualTo(AreaStatus.FREE.getValue());
     }
 
     @Test
-    public void clone_checkEqualsNotSame() throws Exception {
-        char [][] copy = labEscape.clone(labyrinth);
-        assertThat(copy).isEqualTo(labyrinth).isNotSameAs(labyrinth);
-        for (int i = 0; i < labyrinth.length; ++i) {
-            assertThat(copy[i]).isNotSameAs(labyrinth[i]);
-        }
+    public void drawPathForEscape_noEscape() throws Exception {
+        labyrinth.getArea(2, 1).setStatus(AreaStatus.WALL);
+        char[][] array = labyrinth.toArray();
+        assertThatThrownBy(() -> LabEscape.drawPathForEscape(array, 3, 1))
+                .isInstanceOf(NoEscapeException.class)
+                .hasMessageContaining("Specified starting point at [3,1] has no access to exit");
+    }
+
+    @Test
+    public void new_notNull() throws Exception {
+        assertThat(new LabEscape()).isNotNull();
     }
 }
