@@ -2,7 +2,13 @@
 
 [![Build Status](https://api.travis-ci.org/repositories/stepio/labescape.svg?branch=master)](https://travis-ci.org/stepio/labescape)
 
-Example input
+## Overview
+
+Using the framework(s) of your choice (if any) implement a relatively simple API over HTTP which accepts a "maze" structure as input, along with starting point, and returns the solution to said maze.
+
+##Example
+
+Input
 
 	OOOOOOOOOO
 	O    O   O
